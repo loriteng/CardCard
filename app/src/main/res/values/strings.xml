@@ -1,0 +1,34 @@
+<resources>
+    <string name="title_activity_play_game">PlayGame</string>
+    <string name="app_name">翻牌遊戲</string>
+    <string name="LvSet">難度選擇</string>
+    <string name="TimeSet">時間選擇</string>
+    <string name="DCBtton">難度設定確認</string>
+    <string name="BHButton">返回首頁</string>
+    <string name="UserName">冒險者</string>
+    <string name="SetUp">設定</string>
+    <string name="reset">重新遊戲</string>
+    <string name="exit">結束遊戲</string>
+    <string name="GameFinish">遊戲結束!</string>
+    <string name="ok">確認</string>
+    <string name="erro">錯誤</string>
+
+    <string-array name="lsary">
+        <item>簡單(4x5)</item>
+        <item>普通(4x6)</item>
+        <item>困難(4x7)</item>
+    </string-array>
+
+    <string-array name="items">
+        <item>90</item>
+        <item>60</item>
+        <item>30</item>
+    </string-array>
+
+    <string-array name="tsary">
+        <item>90秒</item>
+        <item>60秒</item>
+        <item>30秒</item>
+    </string-array>
+
+</resources>
