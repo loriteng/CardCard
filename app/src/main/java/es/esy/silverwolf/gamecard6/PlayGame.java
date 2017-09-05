@@ -57,7 +57,7 @@ public class PlayGame extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         handler = new UpdateCardsHandler();
         setContentView(R.layout.activity_play_game);
-
+//lori
         loadImages();//讀取翻牌圖片
         backImage = getResources().getDrawable(R.drawable.empty);//卡牌背面
         buttonListener = new ButtonListener();//點擊監視器
