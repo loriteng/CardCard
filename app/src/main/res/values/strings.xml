@@ -13,6 +13,23 @@
     <string name="ok">確認</string>
     <string name="erro">錯誤</string>
 
+
+    <string name="main">讓我們來一起拯救瀕臨絕種動物吧!!</string>
+    <string name="guest">冒險家：</string>
+    <string name="username">請輸入您的名字</string>
+
+    <string name="user01">User01</string>
+    <string name="user02">User02</string>
+    <string name="user03">User03</string>
+    <string name="BEnter">進入遊戲</string>
+
+    <string name="intro">準備好展開奇妙旅程了嗎?</string>
+    <string name="Bstart">開始遊戲</string>
+    <string name="BCopyright">版權說明</string>
+    <string name="BGallery">動物圖鑑</string>
+    <string name="BSetup">遊戲設定</string>
+    <string name="BYoho">開發者選項</string>
+
     <string-array name="lsary">
         <item>簡單(4x5)</item>
         <item>普通(4x6)</item>
