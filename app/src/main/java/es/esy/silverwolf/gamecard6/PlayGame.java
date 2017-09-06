@@ -58,9 +58,9 @@ public class PlayGame extends AppCompatActivity {
         handler = new UpdateCardsHandler();
         setContentView(R.layout.activity_play_game);
 
-        loadImages();//讀取翻牌圖片
-        backImage = getResources().getDrawable(R.drawable.empty);//卡牌背面
-        buttonListener = new ButtonListener();//點擊監視器
+        loadImages();//設定卡牌ID
+        backImage = getResources().getDrawable(R.drawable.empty);//背面卡牌ID連結
+        buttonListener = new ButtonListener();//點擊事件
         mainTable = (TableLayout) findViewById(R.id.GameLayout);//翻牌的表格
         context = mainTable.getContext();//翻牌表格的數量
         final Button SetUpStop = (Button) findViewById(R.id.SetUp);
@@ -68,8 +68,9 @@ public class PlayGame extends AppCompatActivity {
         SetUpStop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                startActivity(new Intent().setClass(PlayGame.this, dest.class));
             }
-        });
+        });//設定鈕
 
         // /設定遊戲時間
         timeView = (TextView) findViewById(R.id.time);
@@ -79,49 +80,10 @@ public class PlayGame extends AppCompatActivity {
         initilizeGame(getDate("SaveLsRow"),getDate("SaveLsColume"));
     }
 
-    //離開遊戲畫面時呼叫timeset.pause()暫停時間
-    @Override
-    protected void onPause() {
-        super.onPause();
-        timeset.pause();
-    }
 
-    //回到遊戲畫面時呼叫timeset.pause()暫停時間
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        timeset.resume();
-    }
 
-    //防止玩家按返回鍵時回上頁的Layout, 讓此Layout的返回鍵變成跟home鍵功能一樣
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK) { // 攔截返回鍵
-            Intent intentHome = new Intent(Intent.ACTION_MAIN);
-            intentHome.addCategory(Intent.CATEGORY_HOME);
-            intentHome.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intentHome);
-            return true;
-        }
-        return super.onKeyDown(keyCode, event);
-    }
 
-    private void initilizeGame(int rowCount,int columeCount) {
-        cards = new int[columeCount][rowCount];
-        items = (rowCount * columeCount) / 2; // 記錄可配對個數
-
-        mainTable.removeAllViews();
-
-        for (int y = 0; y < rowCount; y++) {
-            mainTable.addView(createRow(y));
-        }
-
-        firstCard = null;
-        loadCards(rowCount,columeCount); // 產生卡片
-        pairCount = 0;
-
-    }
-
+    //設定卡牌ID
     private void loadImages() {
         images = new ArrayList<Drawable>();
         images.add(getResources().getDrawable(R.drawable.item01));
@@ -132,6 +94,12 @@ public class PlayGame extends AppCompatActivity {
         images.add(getResources().getDrawable(R.drawable.item06));
         images.add(getResources().getDrawable(R.drawable.item07));
         images.add(getResources().getDrawable(R.drawable.item08));
+        images.add(getResources().getDrawable(R.drawable.item09));
+        images.add(getResources().getDrawable(R.drawable.item10));
+        images.add(getResources().getDrawable(R.drawable.item11));
+        images.add(getResources().getDrawable(R.drawable.item12));
+        images.add(getResources().getDrawable(R.drawable.item13));
+        images.add(getResources().getDrawable(R.drawable.item14));
     }
 
     //生成遊戲(卡牌)
@@ -151,18 +119,15 @@ public class PlayGame extends AppCompatActivity {
                 if (i > 0) {
                     t = r.nextInt(i); // 隨機取得編號
                 }
-
                 t = list.remove(t).intValue(); // 從 list 中取出編號
                 cards[i % columeCount][i / columeCount] = t % (size / 2); // 將編號放入指定位置
             }
-
             // 再次洗牌
             for (int i = 0; i < rowCount; i++)
                 for (int j = 0; j < columeCount; j++) {
                     int rc = r.nextInt(rowCount);
                     int cc = r.nextInt(columeCount);
                     int temp;
-
                     temp = cards[i][j];
                     cards[i][j] = cards[rc][cc];
                     cards[rc][cc] = temp;
@@ -170,7 +135,6 @@ public class PlayGame extends AppCompatActivity {
         }
         catch (Exception e) {
         }
-
     }
     //將生成的卡牌放入畫面內
     private TableRow createRow(int y) {
@@ -317,6 +281,7 @@ public class PlayGame extends AppCompatActivity {
         });
         builder.create().show();
     }
+
     //遊戲時間計算
     private void GameTime(int time) {
         //設定時間
@@ -346,7 +311,24 @@ public class PlayGame extends AppCompatActivity {
         }.start();
     }
 
-    //儲存DateSet.xml暫存資料檔
+    //初始化遊戲畫面
+    private void initilizeGame(int rowCount,int columeCount) {
+        cards = new int[columeCount][rowCount];
+        items = (rowCount * columeCount) / 2; // 記錄可配對個數
+
+        mainTable.removeAllViews();
+
+        for (int y = 0; y < rowCount; y++) {
+            mainTable.addView(createRow(y));
+        }
+
+        firstCard = null;
+        loadCards(rowCount,columeCount); // 產生卡片
+        pairCount = 0;
+
+    }
+
+    //寫入DateSet.xml暫存資料檔
     public void setDate(String key, int value)
     {
         SharedPreferences spref = getApplication().getSharedPreferences(KEY, Context.MODE_PRIVATE);
@@ -355,12 +337,39 @@ public class PlayGame extends AppCompatActivity {
         PE.commit();
     }
 
-    //設定DateSet.xml暫存資料檔
+    //取得DateSet.xml暫存資料檔
     public int getDate(String key)
     {
         SharedPreferences spref = getApplication().getSharedPreferences(KEY, Context.MODE_PRIVATE);
         int strValue = spref.getInt(key, 0);
         return strValue;
+    }
+
+    //離開遊戲畫面時呼叫timeset.pause()暫停時間
+    @Override
+    protected void onPause() {
+        super.onPause();
+        timeset.pause();
+    }
+
+    //回到遊戲畫面時呼叫timeset.pause()暫停時間
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        timeset.resume();
+    }
+
+    //防止玩家按返回鍵時回上頁的Layout, 讓此Layout的返回鍵變成跟home鍵功能一樣
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) { // 攔截返回鍵
+            Intent intentHome = new Intent(Intent.ACTION_MAIN);
+            intentHome.addCategory(Intent.CATEGORY_HOME);
+            intentHome.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intentHome);
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
 }
