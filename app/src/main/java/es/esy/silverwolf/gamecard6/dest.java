@@ -12,7 +12,7 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-public class dest extends AppCompatActivity {
+public class Dest extends AppCompatActivity {
 
     private Spinner LsarySpinner;//喧告Spinner物件
     private Spinner TsarySpinner;
@@ -48,7 +48,7 @@ public class dest extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent().setClass(dest.this, PlayGame.class));
+                startActivity(new Intent().setClass(Dest.this, PlayGame.class));
             }
         });
 
