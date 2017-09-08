@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 /**
  * Created by Administrator on 2017/9/7.
  */
+//建立資
 public class GameData extends SQLiteOpenHelper {
 
     // 資料庫名稱

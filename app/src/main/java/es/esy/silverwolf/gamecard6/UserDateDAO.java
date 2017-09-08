@@ -41,14 +41,13 @@ public class UserDateDAO {
 
     // 建構子，一般的應用都不需要修改
     public UserDateDAO(Context context) {
-        db = GameDBHelper.getDatabase(context);
+        db = GameData.getDatabase(context);
     }
 
     // 關閉資料庫，一般的應用都不需要修改
     public void close() {
         db.close();
     }
-
 
     // 新增參數指定的物件
     public UserData insert(UserData userdata) {
